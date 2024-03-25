@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background:linear-gradient(#A9F1DF , #FFBBBB);
+        }
+        h1{
+            text-align: center;
+            margin-top: 200px;
+            margin-left: 90px;
+
+        }
+        form{
+            border:1px solid black;
+            width:450px;
+            height:400px;
+            margin-left: 600px;
+            border-radius: 15px;
+        }
+        input[type="email"], input[type="password"]{
+            padding:25px;
+            border-radius: 20px;
+            border:2px solid black;
+            padding-left: 45px;
+            margin-left: 45px;
+            width:250px;
+        }
+        input::placeholder{
+            font-size: 22px;
+        }
+        button[type="submit"]{
+            border-radius: 20px;
+            border:2px solid black;
+            margin-left: 150px;
+            width: 150px;
+        }
+        a{
+            text-decoration: none;
+        }
+        .hello{
+            font-size:20px;
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="POST" action="/loginsub">
+        <br>
+        <input type="email" name="email" placeholder="Enter Email" style="margin-top: 30px;">
+        <br><br>
+        <input type="password" name="password" id="" value="" placeholder="Enter Password" style="margin-top: 20px;">
+        <br><br>
+        <p class="hello">Not have an account <a href="/signup">SignUp Here</a></p>
+        <button type="submit"><p style="font-size: 20px;">Login</p></button>
+    </form>
+</body>
+</html>

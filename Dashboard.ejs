@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body{
+            background-color:orange;
+        }
+        nav {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-top: 0px;
+        }
+        ul {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            justify-content: space-between;
+        }
+        header {
+            display: flex;
+        }
+        nav ul li {
+            display: inline-block;
+            margin-left: 180px;
+            font-size: 30px;
+        }
+        h1 {
+            margin-left: 190px;
+        }
+        a:hover {
+            background-color: lightgrey;
+            border-radius: 12%;
+        }
+        input {
+            padding: 25px;
+            border-radius: 8%;
+            border: 2px solid black;
+            margin-top: 130px;
+            margin-left: 450px;
+        }
+        input::placeholder {
+            font-size: 20px;
+        }
+        button {
+            padding: 25px;
+            border-radius: 29px;
+            border: 2px solid black;
+            border-radius: 19%;
+            margin-left: 32px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Read Roaster</h1>
+        <nav>
+            <ul>
+                <li><a href="#Home">Home</a></li>
+                <li><a href="#About">About</a></li>
+                <li><a href="#Books">Movies</a></li>
+                <li><a href="#Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <input type="text" id="searchInput" placeholder="Enter a word">
+    <button onclick="searchBooks()">Search</button>
+    <br><br>
+    <div id="results" style="margin-top: 100px;"></div>
+
+    <script>
+        function searchBooks() {
+            const searchQuery = document.getElementById('searchInput').value.trim();
+            const apiKey = 'AIzaSyAQUG88mfyYRxU7rYinCcgs6eUF5gg3JYs'; // Replace with your Google Books API key
+
+            // Constructing the URL to search for books on Google Books
+            const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&key=${apiKey}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const books = data.items;
+
+                    // Clear previous results
+                    document.getElementById('results').innerHTML = '';
+
+                    // Displaying books in sets of three within separate divs
+                    for (let i = 0; i < books.length; i += 3) {
+                        const bookGroup = books.slice(i, i + 3); // Get three books for this group
+                        const groupDiv = document.createElement('div');
+
+                        // Displaying each book within the group
+                        bookGroup.forEach(book => {
+                            const title = book.volumeInfo.title;
+                            const author = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown';
+                            const imageUrl = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : 'https://via.placeholder.com/128x192.png?text=No+Image';
+                            const bookElement = document.createElement('div');
+                            bookElement.innerHTML = `
+                                <div>
+                                    <img src="${imageUrl}" alt="${title}" style="margin-left:390px;width: 300px; height: 300px;">
+                                    <p style="margin-left:390px;"><strong>Title:</strong> ${title}</p>
+                                    <p style="margin-left:390px;"><strong>Author:</strong> ${author}</p>
+                                </div>`;
+                            groupDiv.appendChild(bookElement);
+                        });
+
+                        document.getElementById('results').appendChild(groupDiv);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
